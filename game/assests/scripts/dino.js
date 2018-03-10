@@ -109,7 +109,7 @@ Runner.config = {
   ACCELERATION: 0.001,
   BG_CLOUD_SPEED: 0.2,
   BOTTOM_PAD: 10,
-  CLEAR_TIME: 3000,
+  CLEAR_TIME: 1000,
   CLOUD_FREQUENCY: 0.5,
   GAMEOVER_CLEAR_TIME: 750,
   GAP_COEFFICIENT: 0.6,
@@ -125,7 +125,7 @@ Runner.config = {
   MIN_JUMP_HEIGHT: 35,
   MOBILE_SPEED_COEFFICIENT: 1.2,
   RESOURCE_TEMPLATE_ID: 'audio-resources',
-  SPEED: 6,
+  SPEED: 8.5,
   SPEED_DROP_COEFFICIENT: 3,
   ARCADE_MODE_INITIAL_TOP_POSITION: 35,
   ARCADE_MODE_TOP_POSITION_PERCENT: 0.1
@@ -720,6 +720,8 @@ Runner.prototype = {
    * @param {Event} e
    */
   onKeyUp: function(e) {
+
+  	
     var keyCode = String(e.keyCode);
     var isjumpKey = Runner.keycodes.JUMP[keyCode] ||
        e.type == Runner.events.TOUCHEND ||
@@ -729,6 +731,7 @@ Runner.prototype = {
       this.tRex.endJump();
     } else if (Runner.keycodes.DUCK[keyCode]) {
       this.tRex.speedDrop = false;
+     
       this.tRex.setDuck(false);
     } else if (this.crashed) {
       // Check that enough time has elapsed before allowing jump key to restart.
@@ -1509,8 +1512,8 @@ Obstacle.types = [
     yPos: [ 100, 75, 50 ], // Variable height.
     yPosMobile: [ 100, 50 ], // Variable height mobile.
     multipleSpeed: 999,
-    minSpeed: 8.5,
-    minGap: 150,
+    minSpeed: 0,
+    minGap: 120,
     collisionBoxes: [
       new CollisionBox(15, 15, 16, 5),
       new CollisionBox(18, 21, 24, 6),
@@ -1868,8 +1871,15 @@ Trex.prototype = {
       this.update(0, Trex.status.DUCKING);
       this.ducking = true;
     } else if (this.status == Trex.status.DUCKING) {
-      this.update(0, Trex.status.RUNNING);
-      this.ducking = false;
+  	function sleep (time) {
+			return new Promise((resolve) => setTimeout(resolve, time));
+		}
+		sleep(300).then(() => {
+    		this.update(0, Trex.status.RUNNING);
+      	this.ducking = false;
+	  	})
+      // this.update(0, Trex.status.RUNNING);
+      // this.ducking = false;
     }
   },
 
@@ -2111,7 +2121,7 @@ DistanceMeter.prototype = {
       }
     }
 
-    this.drawHighScore();
+    // this.drawHighScore();
     return playSound;
   },
 
