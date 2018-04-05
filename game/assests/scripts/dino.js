@@ -106,7 +106,7 @@ var ARCADE_MODE_URL = 'chrome://dino/';
  * @enum {number}
  */
 Runner.config = {
-  ACCELERATION: 0.001,
+  ACCELERATION: 0.00,
   BG_CLOUD_SPEED: 0.2,
   BOTTOM_PAD: 10,
   CLEAR_TIME: 1000,
@@ -114,18 +114,18 @@ Runner.config = {
   GAMEOVER_CLEAR_TIME: 750,
   GAP_COEFFICIENT: 0.6,
   GRAVITY: 0.6,
-  INITIAL_JUMP_VELOCITY: 12,
+  INITIAL_JUMP_VELOCITY: 15,
   INVERT_FADE_DURATION: 12000,
   INVERT_DISTANCE: 700,
   MAX_BLINK_COUNT: 3,
   MAX_CLOUDS: 6,
-  MAX_OBSTACLE_LENGTH: 3,
-  MAX_OBSTACLE_DUPLICATION: 2,
+  MAX_OBSTACLE_LENGTH: 1,
+  MAX_OBSTACLE_DUPLICATION: 1,
   MAX_SPEED: 13,
   MIN_JUMP_HEIGHT: 35,
   MOBILE_SPEED_COEFFICIENT: 1.2,
   RESOURCE_TEMPLATE_ID: 'audio-resources',
-  SPEED: 8.5,
+  SPEED: 6,
   SPEED_DROP_COEFFICIENT: 3,
   ARCADE_MODE_INITIAL_TOP_POSITION: 35,
   ARCADE_MODE_TOP_POSITION_PERCENT: 0.1
@@ -1321,7 +1321,7 @@ Obstacle.MAX_GAP_COEFFICIENT = 1.5;
  * Maximum obstacle grouping count.
  * @const
  */
-Obstacle.MAX_OBSTACLE_LENGTH = 3,
+Obstacle.MAX_OBSTACLE_LENGTH = 1,
 
 
 Obstacle.prototype = {
@@ -1512,7 +1512,7 @@ Obstacle.types = [
     yPos: [ 100, 75, 50 ], // Variable height.
     yPosMobile: [ 100, 50 ], // Variable height mobile.
     multipleSpeed: 999,
-    minSpeed: 0,
+    minSpeed: 8.5,
     minGap: 120,
     collisionBoxes: [
       new CollisionBox(15, 15, 16, 5),
@@ -2476,7 +2476,7 @@ HorizonLine.prototype = {
    * Return the crop x position of a type.
    */
   getRandomType: function() {
-    return Math.random() > this.bumpThreshold ? this.dimensions.WIDTH : 0;
+    return 0//Math.random() > this.bumpThreshold ? this.dimensions.WIDTH : 0;
   },
 
   /**
@@ -2696,7 +2696,7 @@ Horizon.prototype = {
   addNewObstacle: function(currentSpeed) {
     var obstacleTypeIndex = getRandomNum(0, Obstacle.types.length - 1);
     var obstacleType = Obstacle.types[obstacleTypeIndex];
-
+    console.log(obstacleTypeIndex)
     // Check for multiples of the same type of obstacle.
     // Also check obstacle is available at current speed.
     if (this.duplicateObstacleCheck(obstacleType.type) ||
