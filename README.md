@@ -2,6 +2,12 @@
 
 !WORK IN PROGRESS!
 
+<strong>Dependencies</strong>
+- Python 3.6
+- Selenium 
+- OpenCV
+- PIL
+- Keras
 
 ![gif](https://raw.githubusercontent.com/ravi72munde/Chrome-Dino-Reinforcement-Learning/master/img_data/dino.gif)
 <br/>
