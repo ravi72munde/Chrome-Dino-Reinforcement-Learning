@@ -109,7 +109,7 @@ Runner.config = {
   ACCELERATION: 0.00,
   BG_CLOUD_SPEED: 0.2,
   BOTTOM_PAD: 10,
-  CLEAR_TIME: 1,
+  CLEAR_TIME: 457,
   CLOUD_FREQUENCY: 0.5,
   GAMEOVER_CLEAR_TIME: 750,
   GAP_COEFFICIENT: 0.6,
@@ -1068,8 +1068,8 @@ function GameOverPanel(canvas, textImgPos, restartImgPos, dimensions) {
 GameOverPanel.dimensions = {
   TEXT_X: 0,
   TEXT_Y: 13,
-  TEXT_WIDTH: 191,
-  TEXT_HEIGHT: 11,
+  TEXT_WIDTH: 0,
+  TEXT_HEIGHT: 0,
   RESTART_WIDTH: 36,
   RESTART_HEIGHT: 32
 };
