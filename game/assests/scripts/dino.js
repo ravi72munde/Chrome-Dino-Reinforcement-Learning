@@ -1070,8 +1070,8 @@ GameOverPanel.dimensions = {
   TEXT_Y: 13,
   TEXT_WIDTH: 0,
   TEXT_HEIGHT: 0,
-  RESTART_WIDTH: 36,
-  RESTART_HEIGHT: 32
+  RESTART_WIDTH: 0,
+  RESTART_HEIGHT: 0
 };
 
 
@@ -2189,12 +2189,12 @@ function Cloud(canvas, spritePos, containerWidth) {
  * @enum {number}
  */
 Cloud.config = {
-  HEIGHT: 14,
+  HEIGHT: 0,
   MAX_CLOUD_GAP: 400,
   MAX_SKY_LEVEL: 30,
   MIN_CLOUD_GAP: 100,
   MIN_SKY_LEVEL: 71,
-  WIDTH: 46
+  WIDTH: 0
 };
 
 
