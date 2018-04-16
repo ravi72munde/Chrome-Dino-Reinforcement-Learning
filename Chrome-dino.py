@@ -161,7 +161,7 @@ def load_obj(name ):
 
 #game parameters
 ACTIONS = 2 # possible actions: jump, do nothing
-GAMMA = 0.8 # decay rate of past observations original 0.99
+GAMMA = 0.99 # decay rate of past observations original 0.99
 OBSERVATION = 20000. # timesteps to observe before training
 EXPLORE = 50000 #300000. # frames over which to anneal epsilon
 FINAL_EPSILON = 0.0001 # final value of epsilon
@@ -176,7 +176,7 @@ LEARNING_RATE = 1e-4
 
 
 # """initial variable caching, done only once"""
-# save_obj(INITIAL_EPSILON,"epsilon")
+#save_obj(INITIAL_EPSILON,"epsilon")
 # t = 0
 # save_obj(t,"time")
 # # D = deque()
@@ -262,7 +262,7 @@ def trainNetwork(model,game_state,observe=False):
             if  random.random() <= epsilon:
                 print("----------Random Action----------")
                 action_index = random.randrange(ACTIONS)
-                a_t[action_index] = 1
+                a_t[0] = 1
             else:
                 q = model.predict(s_t)       #input a stack of 4 images, get the prediction
                 max_Q = np.argmax(q)
@@ -314,6 +314,7 @@ def trainNetwork(model,game_state,observe=False):
             # targets2 = normalize(targets)
             loss = model.train_on_batch(inputs, targets)
             loss_df.loc[len(loss_df)] = loss
+            q_max_df[len(q_max_df)] = np.max(Q_sa)
         else:
 #             artificial time delay as training done with this delay
 #             loss_df.loc[len(loss_df)] = 0
@@ -332,6 +333,7 @@ def trainNetwork(model,game_state,observe=False):
             loss_df.to_csv("./objects/loss_df.csv",index=False)
             scores_df.to_csv("./objects/scores_df.csv",index=False)
             actions_df.to_csv("./objects/actions_df.csv",index=False)
+            q_max_df.to_csv("./objects/q_values.csv",index=False)
             clear_output()
             with open("model.json", "w") as outfile:
                 json.dump(model.to_json(), outfile)
@@ -380,17 +382,20 @@ class Game_sate:
         self._game = game
         self._display = show_img()
         self._display.__next__()
+        self._min_score=11
     def get_state(self,actions):
         actions_df.loc[len(actions_df)] = actions[1]
-        reward = 0.1
+        score = self._game.get_score()
+        reward = 0.1*score/10
         is_over = False
         if actions[1] == 1:
             self._agent.jump()
+            reward = 0.1*score/11
         image = grab_screen()
         self._display.send(image)
 
         if self._agent.is_crashed():
-            score = self._game.get_score()
+           
             scores_df.loc[len(loss_df)] = score
             self._game.restart()
             reward = -11/score
@@ -444,7 +449,7 @@ playGame(observe=False);
 
 def show_plots(realtime = True,t=0):
     fig, axs = plt.subplots(ncols=2,nrows =2)
-    loss_df = pd.read_csv("./objects/loss_df.csv")
+    loss_df = pd.read_csv("./objects/loss_df.csv").tail(1000)
     scores_df = pd.read_csv("./objects/scores_df.csv")
     actions_df = pd.read_csv("./objects/actions_df.csv")
     q_max_df = pd.read_csv("./objects/q_values.csv")
@@ -460,6 +465,7 @@ def show_plots(realtime = True,t=0):
 #     disp.__next__()
     cv2.imwrite("logs/progress/pg"+str(t)+".png",graph_img) if realtime else 0
 
+show_plots(realtime=False)
 
 
-\
+
