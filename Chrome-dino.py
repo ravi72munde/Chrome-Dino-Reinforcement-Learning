@@ -6,13 +6,13 @@ from PIL import Image
 import cv2
 import io
 import time
-get_ipython().magic('matplotlib inline')
+# get_ipython().magic('matplotlib inline')
 from matplotlib import pyplot as plt
 plt.rcParams['figure.figsize'] = (15, 9)
 import seaborn as sns
 import pandas as pd
 import numpy as np
-from IPython.display import clear_output
+# from IPython.display import clear_output
 from random import randint
 
 
@@ -162,8 +162,8 @@ def load_obj(name ):
 #game parameters
 ACTIONS = 2 # possible actions: jump, do nothing
 GAMMA = 0.99 # decay rate of past observations original 0.99
-OBSERVATION = 20000. # timesteps to observe before training
-EXPLORE = 50000 #300000. # frames over which to anneal epsilon
+OBSERVATION = 50000. # timesteps to observe before training
+EXPLORE = 100000 #300000. # frames over which to anneal epsilon
 FINAL_EPSILON = 0.0001 # final value of epsilon
 INITIAL_EPSILON = 0.1 # starting value of epsilon
 REPLAY_MEMORY = 50000 # number of previous transitions to remember
@@ -238,14 +238,14 @@ def trainNetwork(model,game_state,observe=False):
         OBSERVE = 999999999    #We keep observe, never train
         epsilon = FINAL_EPSILON
         print ("Now we load weight")
-        model.load_weights("model.h5")
+        model.load_weights("model_final.h5")
         adam = Adam(lr=LEARNING_RATE)
         model.compile(loss='mse',optimizer=adam)
         print ("Weight load successfully")    
     else:                       #We go to training mode
         OBSERVE = OBSERVATION
         epsilon = load_obj("epsilon")#FINAL_EPSILON #INITIAL_EPSILON
-        model.load_weights("model.h5")
+        model.load_weights("model_final.h5")
         adam = Adam(lr=LEARNING_RATE)
         model.compile(loss='mse',optimizer=adam)
 
@@ -326,7 +326,7 @@ def trainNetwork(model,game_state,observe=False):
         if t % 1000 == 0:
             print("Now we save model")
             
-            model.save_weights("model.h5", overwrite=True)
+            model.save_weights("model_final.h5", overwrite=True)
             save_obj(D,"D") #saving episodes
             save_obj(t,"time") #caching time steps
             save_obj(epsilon,"epsilon") #cache epsilon to avoid repeated randomness in actions
@@ -334,7 +334,7 @@ def trainNetwork(model,game_state,observe=False):
             scores_df.to_csv("./objects/scores_df.csv",index=False)
             actions_df.to_csv("./objects/actions_df.csv",index=False)
             q_max_df.to_csv("./objects/q_values.csv",index=False)
-            clear_output()
+            # clear_output()
             with open("model.json", "w") as outfile:
                 json.dump(model.to_json(), outfile)
 
