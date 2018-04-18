@@ -105,22 +105,23 @@ var ARCADE_MODE_URL = 'chrome://dino/';
  * Default game configuration.
  * @enum {number}
  */
+
 Runner.config = {
-  ACCELERATION: 0.00,
+  ACCELERATION: 0.00, /*modified removed acceleration*/
   BG_CLOUD_SPEED: 0.2,
   BOTTOM_PAD: 10,
-  CLEAR_TIME: 457,
+  CLEAR_TIME: 457, /*modified reduced time before 1st obstacle arrives*/
   CLOUD_FREQUENCY: 0.5,
   GAMEOVER_CLEAR_TIME: 750,
   GAP_COEFFICIENT: 0.6,
   GRAVITY: 0.6,
-  INITIAL_JUMP_VELOCITY: 15,
+  INITIAL_JUMP_VELOCITY: 15, /*modified modified to work better on scaled screen*/
   INVERT_FADE_DURATION: 12000,
   INVERT_DISTANCE: 700,
   MAX_BLINK_COUNT: 3,
   MAX_CLOUDS: 6,
-  MAX_OBSTACLE_LENGTH: 1,
-  MAX_OBSTACLE_DUPLICATION: 1,
+  MAX_OBSTACLE_LENGTH: 1, /*modified removed additionnal obstacles*/
+  MAX_OBSTACLE_DUPLICATION: 1, /*modified removed additionnal obstacles*/
   MAX_SPEED: 13,
   MIN_JUMP_HEIGHT: 35,
   MOBILE_SPEED_COEFFICIENT: 1.2,
@@ -1068,10 +1069,10 @@ function GameOverPanel(canvas, textImgPos, restartImgPos, dimensions) {
 GameOverPanel.dimensions = {
   TEXT_X: 0,
   TEXT_Y: 13,
-  TEXT_WIDTH: 0,
-  TEXT_HEIGHT: 0,
-  RESTART_WIDTH: 0,
-  RESTART_HEIGHT: 0
+  TEXT_WIDTH: 0, /*modified removed game over panel to get rid of game over image noise*/
+  TEXT_HEIGHT: 0, /*modified*/
+  RESTART_WIDTH: 0, /*modified*/
+  RESTART_HEIGHT: 0 /*modified*/
 };
 
 
@@ -1321,7 +1322,7 @@ Obstacle.MAX_GAP_COEFFICIENT = 1.5;
  * Maximum obstacle grouping count.
  * @const
  */
-Obstacle.MAX_OBSTACLE_LENGTH = 1,
+Obstacle.MAX_OBSTACLE_LENGTH = 1, /*modified reduced types of obstacles.. limited to 1 type of cactus*/
 
 
 Obstacle.prototype = {
@@ -1871,6 +1872,7 @@ Trex.prototype = {
       this.update(0, Trex.status.DUCKING);
       this.ducking = true;
     } else if (this.status == Trex.status.DUCKING) {
+     /*modified not useful modification*/
   	function sleep (time) {
 			return new Promise((resolve) => setTimeout(resolve, time));
 		}
@@ -2121,7 +2123,7 @@ DistanceMeter.prototype = {
       }
     }
 
-    // this.drawHighScore();
+    // this.drawHighScore(); /*modified removed highscore display from screen*/
     return playSound;
   },
 
@@ -2189,12 +2191,12 @@ function Cloud(canvas, spritePos, containerWidth) {
  * @enum {number}
  */
 Cloud.config = {
-  HEIGHT: 0,
+  HEIGHT: 0, /*modified removed clouds was not necessary*/
   MAX_CLOUD_GAP: 400,
   MAX_SKY_LEVEL: 30,
   MIN_CLOUD_GAP: 100,
   MIN_SKY_LEVEL: 71,
-  WIDTH: 0
+  WIDTH: 0 /*modified*/
 };
 
 
@@ -2476,6 +2478,7 @@ HorizonLine.prototype = {
    * Return the crop x position of a type.
    */
   getRandomType: function() {
+  
     return 0//Math.random() > this.bumpThreshold ? this.dimensions.WIDTH : 0;
   },
 
@@ -2696,7 +2699,6 @@ Horizon.prototype = {
   addNewObstacle: function(currentSpeed) {
     var obstacleTypeIndex = getRandomNum(0, Obstacle.types.length - 1);
     var obstacleType = Obstacle.types[obstacleTypeIndex];
-    console.log(obstacleTypeIndex)
     // Check for multiples of the same type of obstacle.
     // Also check obstacle is available at current speed.
     if (this.duplicateObstacleCheck(obstacleType.type) ||
