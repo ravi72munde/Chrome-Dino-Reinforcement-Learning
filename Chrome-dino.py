@@ -318,7 +318,7 @@ def trainNetwork(model,game_state,observe=False):
         else:
 #             artificial time delay as training done with this delay
 #             loss_df.loc[len(loss_df)] = 0
-            time.sleep(0.15)
+            time.sleep(0.20)
         s_t = initial_state if terminal else s_t1
         t = t + 1
         
@@ -392,7 +392,7 @@ class Game_sate:
             self._agent.jump()
             reward = 0.1*score/11
         image = grab_screen()
-        self._display.send(image)
+        #self._display.send(image)
 
         if self._agent.is_crashed():
            
