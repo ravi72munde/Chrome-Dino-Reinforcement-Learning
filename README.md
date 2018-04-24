@@ -12,7 +12,7 @@ Start by cloning the repository
 <br>
 `$ git clone https://github.com/ravi72munde/Chrome-Dino-Reinforcement-Learning.git`
 <br>
-`Dependencies can be installed using pip install or conda install for Anaconda platform`<br><br>
+`Dependencies can be installed using pip install or conda install for Anaconda environment`<br><br>
 
 <strong>Dependencies</strong>
 - Python 3.6
