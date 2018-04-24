@@ -8,8 +8,12 @@ https://github.com/ravi72munde/Chrome-Dino-Reinforcement-Learning/blob/master/Re
 
 # Installation 
 Start by cloning the repository
-$ git clone https://github.com/ravi72munde/Chrome-Dino-Reinforcement-Learning.git
-Dependencies can be installed using pip install or conda install for Anaconda platform
+<br>
+<br>
+`$ git clone https://github.com/ravi72munde/Chrome-Dino-Reinforcement-Learning.git`
+<br>
+`Dependencies can be installed using pip install or conda install for Anaconda platform`<br><br>
+
 <strong>Dependencies</strong>
 - Python 3.6
 - Selenium 
